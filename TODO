@@ -1,0 +1,29 @@
+The thing compiles and runs at the moment, however there are still lots of
+things to do:
+
+ - The whole thing runs in ARM mode (-marm). This is not really good. We
+   have so much game state to update, so that code must be FAST (= THUMB
+   mode).
+
+ - We can't just switch to -mthumb -mthumb-interwork, since the CPU is
+   executing in ARM mode when it calls the interrupt handler.
+
+ - We also have to make sure that the ARM and THUMB code is executed from
+   the right type of memory (WRAM for ARM and GamePak ROM for THUMB).
+
+ - Add a correct ROM header that will allow the game to run with a Nintendo
+   BIOS.
+
+ - Most game field objects don't update correctly (mostly only zonks are
+   implemented).
+
+ - With many zonks in the game field, the game drops to 50% speed. Oops.
+   This is likely to only get worse as we implement more game field object
+   handlers. Is it enough if we switch to THUMB mode? Probably not. We
+   may have to implement the whole thing in hand-coded assembly or
+   something to ensure the right speed. Or use other tricks. Maybe lookup
+   tables.
+
+ - Make sure that ALL game objects behave exactly like the Amiga/PC version.
+   This is hard. We may have to disassemble the PC version to make sure
+   everything is "pixel perfect".
